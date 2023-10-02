@@ -9,13 +9,14 @@ const Pedidos = db.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
+      allowNull: false
     },
-    nome_cliente: {
+    cliente_id: {
       type: DataTypes.STRING,
       allowNull: false,
       references: {
         model: Clientes,
-        key: 'nome_completo',
+        key: 'cliente_id',
       },
     },
     servico: {
@@ -42,7 +43,12 @@ const Pedidos = db.define(
   {
     tableName: "pedidos" ,
   },
-  
+    db.sync().then(() => {
+    console.log('Tabela sincronizada com sucesso');
+  })
+  .catch((error) => {
+    console.error('Erro ao sincronizar tabela:', error);
+  })
 );
 
 module.exports = Pedidos;

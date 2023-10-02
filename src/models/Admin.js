@@ -24,7 +24,13 @@ const Admin = db.define(
   },
   {
     tableName: "admin",
-  }
+  },
+    db.sync().then(() => {
+    console.log('Tabela sincronizada com sucesso');
+  })
+  .catch((error) => {
+    console.error('Erro ao sincronizar tabela:', error);
+  })
 );
 
 module.exports = Admin;
