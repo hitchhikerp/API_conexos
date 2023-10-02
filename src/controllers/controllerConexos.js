@@ -1,11 +1,11 @@
-const { Pedido, Cliente } = require("../models");
+const { Pedidos, Clientes } = require("../models");
 
 const controllerConexos = {
   listarPedido: async (req, res) => {
     try {
-      const listaDePedidos = await Pedido.findAll({
+      const listaDePedidos = await Pedidos.findAll({
         include: {
-          model: Cliente,
+          model: Clientes,
         },
       });
       console.log(listaDePedidos)
@@ -17,14 +17,14 @@ const controllerConexos = {
   },
 
   async enviarPedido(req, res) {
-    const { cliente, servico, data_efetuar_servico, status } = req.body;
-    const novoPedido = await Pedido.create({
-      cliente: cliente,
+    const { nome_cliente, servico, data_efetuar_servico, status } = req.body;
+    const novoPedido = await Pedidos.create({
+      nome_cliente: nome_cliente,
       servico: servico,
       data_efetuar_servico: data_efetuar_servico,
       status: status,
-    });
-
+    }); 
+    
     res.json(novoPedido);
   },
 
@@ -32,7 +32,7 @@ const controllerConexos = {
     const { cpf, nome_completo, telefone, email, preferencia_horario, plano } =
       req.body;
 
-    const novoCliente = await Cliente.create({
+    const novoCliente = await Clientes.create({
       cpf: cpf,
       nome_completo: nome_completo,
       telefone: telefone,
@@ -46,7 +46,7 @@ const controllerConexos = {
 
   async deletarPedido(req, res) {
     const { codigo_pedido } = req.params;
-    await Pedido.destroy({
+    await Pedidos.destroy({
       where: {
         codigo_pedido: codigo_pedido,
       },
@@ -55,10 +55,10 @@ const controllerConexos = {
   },
   async atualizarStatus(req, res) {
     const { codigo_pedido } = req.params;
-    const { cliente, servico, data_contratacao, status } = req.body;
-    const pedidoAtualizado = await Pedido.update(
+    const { nome_cliente, servico, data_contratacao, status } = req.body;
+    const pedidoAtualizado = await Pedidos.update(
       {
-        cliente: cliente,
+        nome_cliente: nome_cliente,
         servico: servico,
         data_contratacao: data_contratacao,
         status: status,

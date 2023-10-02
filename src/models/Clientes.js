@@ -1,18 +1,16 @@
 const db = require("../database");
 const { DataTypes } = require("sequelize");
 
-const Cliente = db.define(
-  "Cliente",
+const Clientes = db.define(
+  "Clientes",
   {
     cpf: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
+      type: DataTypes.STRING,
       allowNull: false,  
     },
     nome_completo: {
       type: DataTypes.STRING,
       primaryKey: true,
-      allowNull: false,
     },
     telefone: {
       type: DataTypes.INTEGER,
@@ -40,8 +38,8 @@ const Cliente = db.define(
     },
   },
   {
-    tableName: "cliente",
+    tableName: "clientes",
   }
 );
 
-module.exports = Cliente;
+module.exports = Clientes;

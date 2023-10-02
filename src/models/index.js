@@ -1,15 +1,15 @@
-const Pedido = require("./Pedido");
-const Cliente = require("./Cliente");
+const Pedidos = require("./Pedidos");
+const Clientes = require("./Clientes");
 
-Pedido.belongsTo(Cliente, {
-    foreignKey: 'cliente'
+Pedidos.belongsTo(Clientes, {
+    foreignKey: 'nome_cliente'
 })
-Cliente.hasMany(Pedido, {
-    foreignKey: 'cliente'
+Clientes.hasMany(Pedidos, {
+    foreignKey: 'nome_cliente'
 })
 
 module.exports = {
-    Pedido,
-    Cliente,
+    Pedidos,
+    Clientes,
 };
 

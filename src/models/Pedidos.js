@@ -1,23 +1,20 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const Cliente = require("./Cliente");
+const Clientes = require("./Clientes");
 const db = require("../database");
 
-const Pedido = db.define(
-  "Pedido",
+const Pedidos = db.define(
+  "Pedidos",
   {
     codigo_pedido: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      allowNull: false,
       autoIncrement: true,
     },
-    cliente: {
-      type: DataTypes.STRING(200),
-      primaryKey: true,
+    nome_cliente: {
+      type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
       references: {
-        model: Cliente,
+        model: Clientes,
         key: 'nome_completo',
       },
     },
@@ -43,8 +40,9 @@ const Pedido = db.define(
     },
   },
   {
-    tableName: "pedido" ,
-  }
+    tableName: "pedidos" ,
+  },
+  
 );
 
-module.exports = Pedido;
+module.exports = Pedidos;
