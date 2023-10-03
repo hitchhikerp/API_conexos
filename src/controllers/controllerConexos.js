@@ -28,7 +28,8 @@ const controllerConexos = {
   },
 
   async enviarPedido(req, res) {
-    const { nome_cliente, cliente_id, servico, data_efetuar_servico, status } = req.body;
+    const { nome_cliente, cliente_id, servico, data_efetuar_servico, status } =
+      req.body;
     const novoPedido = await Pedidos.create({
       nome_cliente: nome_cliente,
       cliente_id: cliente_id,
@@ -37,7 +38,7 @@ const controllerConexos = {
       status: status,
     });
 
-    res.json(novoPedido);
+    res.status(201).json(novoPedido);
   },
 
   async enviarCliente(req, res) {
@@ -53,17 +54,21 @@ const controllerConexos = {
       plano: plano,
     });
 
-    res.json(novoCliente);
+    res.status(201).json(novoCliente);
   },
 
   async deletarPedido(req, res) {
-    const { codigo_pedido } = req.params;
-    await Pedidos.destroy({
-      where: {
-        codigo_pedido: codigo_pedido,
-      },
-    });
-    res.json("Pedido deletado");
+    try {
+      const { codigo_pedido } = req.params;
+      await Pedidos.destroy({
+        where: {
+          codigo_pedido: codigo_pedido,
+        },
+      });
+      res.status(204);
+    } catch (error) {
+      return res.status(500).json("Ocoreu algum problema");
+    }
   },
 
   async deletarCliente(req, res) {
@@ -73,12 +78,16 @@ const controllerConexos = {
         cliente_id: cliente_id,
       },
     });
-    res.json("Cliente deletado");
+    res.status(204);
   },
 
   async atualizarStatus(req, res) {
     const { codigo_pedido } = req.params;
     const { nome_cliente, servico, data_contratacao, status } = req.body;
+
+    if (!codigo_pedido)
+      return res.status(400).json("codigo_pedido não enviado");
+
     const pedidoAtualizado = await Pedidos.update(
       {
         nome_cliente: nome_cliente,
@@ -97,7 +106,12 @@ const controllerConexos = {
 
   async atualizarDadosCliente(req, res) {
     const { cliente_id } = req.params;
-    const { cpf, nome_completo, telefone, email, preferencia_horario, plano } = req.body;
+    const { cpf, nome_completo, telefone, email, preferencia_horario, plano } =
+      req.body;
+
+    if (!codigo_pedido)
+      return res.status(400).json("codigo_pedido não enviado");
+
     const pedidoAtualizado = await Clientes.update(
       {
         cpf: cpf,

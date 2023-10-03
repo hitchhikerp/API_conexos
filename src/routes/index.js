@@ -4,11 +4,11 @@ const routes = express.Router();
 
 routes.get("/pedidos/lista", controllerConexos.listarPedidos);
 routes.get("/clientes/lista", controllerConexos.listarClientes);
-routes.post("/pedido/criar", controllerConexos.enviarPedido);
-routes.post("/cliente/criar", controllerConexos.enviarCliente);
-routes.delete("/pedido/:codigo_pedido/deletar", controllerConexos.deletarPedido);
-routes.delete("/clientes/:nome_completo/deletar", controllerConexos.deletarCliente);
-routes.put("/pedido/:codigo_pedido/atualizar", controllerConexos.atualizarStatus);
-routes.put("/cliente/:nome_completo/atualizar", controllerConexos.atualizarDadosCliente);
+routes.post("/pedidos/criar", controllerConexos.enviarPedido);
+routes.post("/clientes/criar", controllerConexos.enviarCliente);
+routes.delete("/pedidos/:codigo_pedido", controllerConexos.deletarPedido);
+routes.delete("/clientes/:cliente_id", controllerConexos.deletarCliente);
+routes.put("/pedidos/:codigo_pedido", controllerConexos.atualizarStatus);
+routes.put("/clientes/:cliente_id", controllerConexos.atualizarDadosCliente);
 
 module.exports = routes;
