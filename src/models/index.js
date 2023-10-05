@@ -1,5 +1,6 @@
 const Pedidos = require("./Pedidos");
 const Clientes = require("./Clientes");
+const Admin = require("./Admin");
 
 Pedidos.belongsTo(Clientes, {
     foreignKey: 'cliente_id'
@@ -11,5 +12,6 @@ Clientes.hasMany(Pedidos, {
 module.exports = {
     Pedidos,
     Clientes,
+    Admin,
 };
 

@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes } = require("sequelize");
 const Clientes = require("./Clientes");
 const db = require("../database");
 
@@ -9,14 +9,14 @@ const Pedidos = db.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      allowNull: false
+      allowNull: false,
     },
     cliente_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
         model: Clientes,
-        key: 'cliente_id',
+        key: "cliente_id",
       },
     },
     servico: {
@@ -41,14 +41,16 @@ const Pedidos = db.define(
     },
   },
   {
-    tableName: "pedidos" ,
-  },
-    db.sync().then(() => {
-    console.log('Tabela sincronizada com sucesso');
+    tableName: "pedidos",
+  }
+);
+
+db.sync()
+  .then(() => {
+    console.log("Tabela sincronizada com sucesso");
   })
   .catch((error) => {
-    console.error('Erro ao sincronizar tabela:', error);
-  })
-);
+    console.error("Erro ao sincronizar tabela:", error);
+  });
 
 module.exports = Pedidos;
